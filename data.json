@@ -31,8 +31,8 @@
 	},
 	"Dowar#3816": {
 		"nyas": {
-			"nombre": 10,
-			"timer": 1514356285909
+			"nombre": 20,
+			"timer": 1514370434840
 		},
 		"calin": {
 			"nombre": 2,
@@ -410,6 +410,16 @@
 		}
 	},
 	"Maid-chan [BETA]#1411": {
+		"nyas": {
+			"nombre": "0",
+			"timer": "0"
+		},
+		"calin": {
+			"nombre": "0",
+			"timer": "0"
+		}
+	},
+	"Kazu#0880": {
 		"nyas": {
 			"nombre": "0",
 			"timer": "0"

@@ -2,24 +2,24 @@ const Discord = require("discord.js")
 const client = new Discord.Client()
 const http = require('http')
 const fs = require("fs-extra")
-const express = require('express')
-const app = express()
+//const express = require('express')
+//const app = express()
 
 let data = JSON.parse(fs.readFileSync("./data.json", "utf8"))
 
 var prefix = "!"
-var token = process.env.TOKEN
+var token = "MzkzNTQ3NzIwOTM1MjExMDA4.DSMynA.V0uLJ_T0QCCdtPUEoSxMqDhajHE"
 var id = "393547720935211008"
 var tag = "Maid-chan#0518"
 
-app.get("/", (request, response) => {
-  console.log(Date.now() + " Ping Received");
-  response.sendStatus(200);
-});
-app.listen(process.env.PORT);
-setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 280000);
+//app.get("/", (request, response) => {
+//  console.log(Date.now() + " Ping Received");
+//  response.sendStatus(200);
+//});
+//app.listen(process.env.PORT);
+//setInterval(() => {
+//  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+//}, 280000);
 
 String.prototype.sansAccent = function()
 {
