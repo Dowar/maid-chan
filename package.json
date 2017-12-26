@@ -1,10 +1,10 @@
 {
-  "name": "my-glitch-app",
+  "name": "maid_chan",
   "version": "0.0.1",
-  "description": "What am I about?",
-  "main": "server.js",
+  "description": "private discord bot",
+  "main": "maid.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node maid.js"
   },
   "dependencies": {
     "discord.js": "^11.2.1",
