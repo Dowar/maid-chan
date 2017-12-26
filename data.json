@@ -6,7 +6,7 @@
 		},
 		"calin": {
 			"nombre": 2,
-			"timer": 1514246305921
+			"timer": 1514356248375
 		}
 	},
 	"Clyde#0000": {
@@ -31,12 +31,12 @@
 	},
 	"Dowar#3816": {
 		"nyas": {
-			"nombre": 5,
-			"timer": 1514244061257
+			"nombre": 10,
+			"timer": 1514356285909
 		},
 		"calin": {
-			"nombre": 1,
-			"timer": 1514243724833
+			"nombre": 2,
+			"timer": 1514356154203
 		}
 	},
 	"JoWuZ#2930": {
@@ -121,11 +121,11 @@
 	},
 	"WithShiro#9641": {
 		"nyas": {
-			"nombre": 5,
-			"timer": 1514247963807
+			"nombre": 10,
+			"timer": 1514356424831
 		},
 		"calin": {
-			"nombre": 2,
+			"nombre": 3,
 			"timer": 1514342728251
 		}
 	},
