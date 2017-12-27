@@ -6,10 +6,12 @@ const fs = require("fs-extra")
 let data = JSON.parse(fs.readFileSync("./data.json", "utf8"))
 
 var prefix = "!"
-var token = process.env.TOKEN
 var id = "393547720935211008"
 var tag = "Maid-chan#0518"
 
+//========================================================================================//
+//  Fonction pour le retrait des accents lors de la lecture du bot           
+//========================================================================================//
 String.prototype.sansAccent = function()
 {
     var accent = 
@@ -30,6 +32,7 @@ String.prototype.sansAccent = function()
     }
     return str
 }
+//========================================================================================//
 
 client.on("ready", () =>
 {
@@ -39,6 +42,9 @@ client.on("ready", () =>
     client.user.setGame("Serveuse","https://www.twitch.tv/IA")
     //client.user.setAvatar("./Images/maid_chan_noel.png")
 
+    //========================================================================================//
+    //  Mise à jour de la base de donnée                            
+    //========================================================================================//
     let utilisateur = client.users.map(u=> `${u.tag}`)
     var i = 0
     while(utilisateur[i])
@@ -69,6 +75,7 @@ client.on("ready", () =>
         })
         i++
     }
+    //========================================================================================//
 })
 
 client.on("message", message =>
@@ -76,10 +83,15 @@ client.on("message", message =>
     var msgc = message.content.toLowerCase().sansAccent()
     //console.log(msgc)
 
+    //========================================================================================//
+    //  Dialogue - Dictionnaire                                     
+    //========================================================================================//
     var salut = ["salut ","bonjour ","yo ","coucou ","hola ","hi ","もしもし ","привет ","buongiorno ","Konnichiwa ","你好 ","buenos dias ","ciao ","صباح الخير ","안녕하세요 "]
     var malpoli = [" bite","chibre","penis","phallus","zizi"]
     var maidchan = ["maidchan","maid-chan","maid"]
-
+    //========================================================================================//
+    //  Dialogue - Salut                                      
+    //========================================================================================//
     if (salut.some(mots => msgc.includes(mots))&&maidchan.some(mots => msgc.includes(mots)))
     {
         if (message.author.id !== id)
@@ -95,7 +107,9 @@ client.on("message", message =>
             }
         }
     }
-
+    //========================================================================================//
+    //  Dialogue - Censure                                      
+    //========================================================================================//
     if (malpoli.some(mots => msgc.includes(mots)))
     {
         if (message.author.id !== id)
@@ -116,7 +130,9 @@ client.on("message", message =>
         }
         message.delete()
     }
-
+    //========================================================================================//
+    //  Dialogue - Joyeux noel                                     
+    //========================================================================================//
     if (msgc.startsWith("joyeux noel")||msgc.startsWith("noyeux joel"))
     {
         if (message.author.id !== id)
@@ -145,7 +161,9 @@ client.on("message", message =>
         }
         return
     }
-
+    //========================================================================================//
+    //  Commande - !Profil                                   
+    //========================================================================================//
     if (msgc.startsWith(prefix + "profil")) 
     {
         message.channel.send("", 
@@ -181,7 +199,9 @@ client.on("message", message =>
             }
         })
     }
-
+    //========================================================================================//
+    //  Commande - !Calin                                      
+    //========================================================================================//
     if (msgc.startsWith(prefix + "calin"))
     {
         var mentionned = message.mentions.users.first()
@@ -197,15 +217,12 @@ client.on("message", message =>
             });
             return
         }
-
-        if (!mentionned || mentionned == message.author) 
+        else if (!mentionned || mentionned == message.author) 
         {
             message.channel.send("*mais personne n'est venu")
             return 
         }
         
-
-
         if ((data[message.author.tag]["calin"].timer > Date.now()) && (data[message.author.tag]["calin"].timer !== 0)) 
         {
             var now = new Date().getTime()
@@ -230,6 +247,9 @@ client.on("message", message =>
             return
         }
     }
+    //========================================================================================//
+    //  Commande - !Bonus                                   
+    //========================================================================================//
     if (msgc.startsWith(prefix + "bonus"))
     {
         var mentionned = message.mentions.users.first()
@@ -269,6 +289,7 @@ client.on("message", message =>
             message.channel.send("**" + message.author.username + "** offre 5 Nyas:moneybag: à **" + mentionned.username + "**")
             return
         }
-    }
+    } 
+    //========================================================================================//
 })
-client.login(token)
+client.login(process.env.TOKEN)
