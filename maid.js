@@ -241,16 +241,13 @@ client.on("message", message =>
             }
             else
             {
-                if ((!mentionned||mentionned == message.author))
+                data[mentionned.tag]["calin"].nombre++
+                data[message.author.tag]["calin"].timer = Date.now() + 43200000 //43200000 = 12h en millisecondes
+                fs.writeFile("./data.json", JSON.stringify(data,"","\t"), (err) => 
                 {
-                    data[mentionned.tag]["calin"].nombre++
-                    data[message.author.tag]["calin"].timer = Date.now() + 43200000 //43200000 = 12h en millisecondes
-                    fs.writeFile("./data.json", JSON.stringify(data,"","\t"), (err) => 
-                    {
-                        if (err) console.error(err)
-                    });
-                    message.channel.send("**" + message.author.username + "** fait un câlin virtuel:hugging: à **" + mentionned.username + "**")
-                }
+                    if (err) console.error(err)
+                });
+                message.channel.send("**" + message.author.username + "** fait un câlin virtuel:hugging: à **" + mentionned.username + "**")
             }
         }
     }
