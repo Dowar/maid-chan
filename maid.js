@@ -1,3 +1,4 @@
+const config = require("./config.json");
 const Discord = require("discord.js")
 const client = new Discord.Client()
 const http = require('http')
@@ -341,4 +342,4 @@ client.on("message", message =>
     } 
     //========================================================================================//
 })
-client.login(process.env.TOKEN) //Recuperation du TOKEN dans les variables environnement
+client.login(config.token) //Recuperation du TOKEN dans les variables environnement
