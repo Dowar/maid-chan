@@ -341,5 +341,4 @@ client.on("message", message =>
     } 
     //========================================================================================//
 })
-process.env.TOKEN="Mzk1MDIxNzc5NjMxODY1ODU2.DSR5jQ.dIojlDU8Yd_0XjhviyzGFRJAwhk"
 client.login(process.env.TOKEN) //Recuperation du TOKEN dans les variables environnement
