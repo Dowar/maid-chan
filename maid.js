@@ -81,14 +81,16 @@ client.on("ready", () =>
 client.on("message", message =>
 {
     var msgc = message.content.toLowerCase().sansAccent()
+    var mentionned = message.mentions.users.first()
     //console.log(msgc)
 
     //========================================================================================//
     //  Dialogue - Dictionnaire                                     
     //========================================================================================//
     var salut = ["salut ","bonjour ","yo ","coucou ","hola ","hi ","もしもし ","привет ","buongiorno ","Konnichiwa ","你好 ","buenos dias ","ciao ","صباح الخير ","안녕하세요 "]
+    var cava = ["sa va","ca va"]
     var malpoli = [" bite","chibre","penis","phallus","zizi"]
-    var maidchan = ["maidchan","maid-chan","maid"]
+    var maidchan = ["maidchan","maid-chan","maid","tout le monde","les gens"]
     //========================================================================================//
     //  Dialogue - Salut                                      
     //========================================================================================//
@@ -104,6 +106,24 @@ client.on("message", message =>
             if(r>=5)
             {
                 message.channel.send("Bonjour " + message.author.username + " !")
+            }
+        }
+    }
+    //========================================================================================//
+    //  Dialogue - ça va ?                                      
+    //========================================================================================//
+    if (cava.some(mots => msgc.includes(mots))&&maidchan.some(mots => msgc.includes(mots)))
+    {
+        if (message.author.id !== id)
+        {
+            var r = Math.floor((Math.random()*10))
+            if(r<=4)
+            {
+                message.channel.send("ça va !")
+            }
+            if(r>=5)
+            {
+                message.channel.send("ça va bien !")
             }
         }
     }
@@ -159,53 +179,86 @@ client.on("message", message =>
                 })
             }
         }
-        return
     }
     //========================================================================================//
-    //  Commande - prefix + profil                                   
+    //  Commande - prefix + profil + mention(optionnel)
     //========================================================================================//
     if (msgc.startsWith(prefix + "profil")) 
     {
-        message.channel.send("", 
+        if (!mentionned)
         {
-            embed: 
+            message.channel.send("", 
             {
-                color: 0xE15306,
-                author:  message.author.name,
-                title: "Profil de " + message.author.username,
-                description: message.author.tag,
-                fields: 
-                [
+                embed: 
+                {
+                    color: 0xE15306,
+                    title: "Profil de " + message.author.username,
+                    description: message.author.tag,
+                    fields: 
+                    [
+                        {
+                            name: "**Nyas**",
+                            value: data[message.author.tag]["nyas"].nombre,
+                            inline: true
+                        }, 
+                        {
+                            name: "**Câlins reçu**",
+                            value: data[message.author.tag]["calin"].nombre,
+                            inline: false
+                        },
+                    ],
+                    thumbnail: 
                     {
-                        name: "**Nyas**",
-                        value: data[message.author.tag]["nyas"].nombre,
-                        inline: true
-                    }, 
-                    {
-                        name: "**Câlins reçu**",
-                        value: data[message.author.tag]["calin"].nombre,
-                        inline: false
+                        url: message.author.avatarURL
                     },
-                ],
-                thumbnail: 
-                {
-                    url: message.author.avatarURL
-                },
-                timestamp: new Date(),
-                footer: 
-                {
-                    text: "Maid-chan V0.1",
+                    timestamp: new Date(),
+                    footer: 
+                    {
+                        text: "Maid-chan V0.1",
+                    }
                 }
-            }
-        })
+            })
+        }
+        else
+        {
+            message.channel.send("", 
+            {
+                embed: 
+                {
+                    color: 0xE15306,
+                    title: "Profil de " + mentionned.username,
+                    description: mentionned.tag,
+                    fields: 
+                    [
+                        {
+                            name: "**Nyas**",
+                            value: data[mentionned.tag]["nyas"].nombre,
+                            inline: true
+                        }, 
+                        {
+                            name: "**Câlins reçu**",
+                            value: data[mentionned.tag]["calin"].nombre,
+                            inline: false
+                        },
+                    ],
+                    thumbnail: 
+                    {
+                        url: mentionned.avatarURL
+                    },
+                    timestamp: new Date(),
+                    footer: 
+                    {
+                        text: "Maid-chan V0.1",
+                    }
+                }
+            })
+        }
     }
     //========================================================================================//
     //  Commande - prefix + calin                                      
     //========================================================================================//
     if (msgc.startsWith(prefix + "calin"))
     {
-        var mentionned = message.mentions.users.first()
-
         if (!mentionned) 
         {
             if ((data[tag]["calin"].timer > Date.now()))
@@ -288,4 +341,5 @@ client.on("message", message =>
     } 
     //========================================================================================//
 })
+process.env.TOKEN="Mzk1MDIxNzc5NjMxODY1ODU2.DSR5jQ.dIojlDU8Yd_0XjhviyzGFRJAwhk"
 client.login(process.env.TOKEN) //Recuperation du TOKEN dans les variables environnement

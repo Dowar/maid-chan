@@ -1,0 +1,13 @@
+réponses :
+
+salut - fait
+aurevoir
+bonne nuit
+ça va - fait
+tu fait quoi
+
+commandes :
+
+!profil
+!bonus
+!calin
