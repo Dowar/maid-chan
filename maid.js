@@ -34,6 +34,19 @@ String.prototype.sansAccent = function()
     return str
 }
 //========================================================================================//
+//  Fonction pour récuperer les commandes via des fichier externes          
+//========================================================================================//
+fs.readdir("./commandes/", (err, files) => 
+{
+    if (err) return console.error(err)
+    files.forEach(file => 
+    {
+        let eventFunction = require(`./commandes/${file}`)
+        let eventName = file.split(".")[0]
+        client.on(eventName, (...args) => eventFunction.run(client, ...args))
+    })
+})
+//========================================================================================//
 
 client.on("ready", () =>
 {
@@ -80,11 +93,27 @@ client.on("ready", () =>
 })
 
 client.on("message", message =>
-{
-    var msgc = message.content.toLowerCase().sansAccent()
-    var mentionned = message.mentions.users.first()
-    //console.log(msgc)
+{   
+    const mentionned = message.mentions.users.first()             //utilisateur mentionné
+    const dialogue =  message.content.toLowerCase().sansAccent()  //lecture de la phrase
 
+    //========================================================================================//
+    //  Commandes - Communications avec les fichiers externes                                    
+    //========================================================================================//
+    if (message.content.startsWith("!"))
+    {
+        const args = message.content.slice(prefix.length).trim().split(/ +/g);  //tableau avec tout les mots du message + suppresion prefix
+        const commande = args.shift().toLowerCase().sansAccent()                //lecture de la commande
+        try 
+        {
+            let commandFile = require(`./commandes/${commande}.js`)
+            commandFile.run(client ,fs , message, args, mentionned, data, commande, id, tag)
+        } 
+        catch (err) 
+        {
+            console.error(err)
+        }
+    }
     //========================================================================================//
     //  Dialogue - Dictionnaire                                     
     //========================================================================================//
@@ -95,7 +124,7 @@ client.on("message", message =>
     //========================================================================================//
     //  Dialogue - Salut                                      
     //========================================================================================//
-    if (salut.some(mots => msgc.includes(mots))&&maidchan.some(mots => msgc.includes(mots)))
+    if (salut.some(mots => dialogue.includes(mots))&&maidchan.some(mots => dialogue.includes(mots)))
     {
         if (message.author.id !== id)
         {
@@ -113,7 +142,7 @@ client.on("message", message =>
     //========================================================================================//
     //  Dialogue - ça va ?                                      
     //========================================================================================//
-    if (cava.some(mots => msgc.includes(mots))&&maidchan.some(mots => msgc.includes(mots)))
+    if (cava.some(mots => dialogue.includes(mots))&&maidchan.some(mots => dialogue.includes(mots)))
     {
         if (message.author.id !== id)
         {
@@ -131,7 +160,7 @@ client.on("message", message =>
     //========================================================================================//
     //  Dialogue - Censure                                      
     //========================================================================================//
-    if (malpoli.some(mots => msgc.includes(mots)))
+    if (malpoli.some(mots => dialogue.includes(mots)))
     {
         if (message.author.id !== id)
         {
@@ -154,7 +183,7 @@ client.on("message", message =>
     //========================================================================================//
     //  Dialogue - Joyeux noel                                     
     //========================================================================================//
-    if (msgc.startsWith("joyeux noel")||msgc.startsWith("noyeux joel"))
+    if (dialogue.startsWith("joyeux noel")||dialogue.startsWith("noyeux joel"))
     {
         if (message.author.id !== id)
         {
@@ -181,165 +210,6 @@ client.on("message", message =>
             }
         }
     }
-    //========================================================================================//
-    //  Commande - prefix + profil + mention(optionnel)
-    //========================================================================================//
-    if (msgc.startsWith(prefix + "profil")) 
-    {
-        if (!mentionned)
-        {
-            message.channel.send("", 
-            {
-                embed: 
-                {
-                    color: 0xE15306,
-                    title: "Profil de " + message.author.username,
-                    description: message.author.tag,
-                    fields: 
-                    [
-                        {
-                            name: "**Nyas**",
-                            value: data[message.author.tag]["nyas"].nombre,
-                            inline: true
-                        }, 
-                        {
-                            name: "**Câlins reçu**",
-                            value: data[message.author.tag]["calin"].nombre,
-                            inline: false
-                        },
-                    ],
-                    thumbnail: 
-                    {
-                        url: message.author.avatarURL
-                    },
-                    timestamp: new Date(),
-                    footer: 
-                    {
-                        text: "Maid-chan V0.1",
-                    }
-                }
-            })
-        }
-        else
-        {
-            message.channel.send("", 
-            {
-                embed: 
-                {
-                    color: 0xE15306,
-                    title: "Profil de " + mentionned.username,
-                    description: mentionned.tag,
-                    fields: 
-                    [
-                        {
-                            name: "**Nyas**",
-                            value: data[mentionned.tag]["nyas"].nombre,
-                            inline: true
-                        }, 
-                        {
-                            name: "**Câlins reçu**",
-                            value: data[mentionned.tag]["calin"].nombre,
-                            inline: false
-                        },
-                    ],
-                    thumbnail: 
-                    {
-                        url: mentionned.avatarURL
-                    },
-                    timestamp: new Date(),
-                    footer: 
-                    {
-                        text: "Maid-chan V0.1",
-                    }
-                }
-            })
-        }
-    }
-    //========================================================================================//
-    //  Commande - prefix + calin                                      
-    //========================================================================================//
-    if (msgc.startsWith(prefix + "calin"))
-    {
-        if (!mentionned) 
-        {
-            if ((data[tag]["calin"].timer > Date.now()))
-            {
-            message.channel.send("désolé j'ai déjà atteint mon quota de calin aujourd'hui !")
-            }
-            else
-            {
-                message.channel.send("Tu n'a personne pour te faire un câlin ?")
-                message.channel.send("**Maid-chan** fait un câlin virtuel:hugging: à **" + message.author.username + "**")
-                data[tag]["calin"].timer = Date.now() + 43200000 //43200000 = 12h en millisecondes
-                data[message.author.tag]["calin"].nombre++
-                fs.writeFile("./data.json", JSON.stringify(data,"","\t"), (err) =>
-                {
-                    if (err) console.error(err)
-                });
-            }
-        }
-        else if (mentionned == message.author)
-        {
-            message.channel.send("*mais personne n'est venu")
-        }
-        else
-        {
-            if ((data[message.author.tag]["calin"].timer > Date.now()))
-            {
-                var now = new Date().getTime()
-                var distance = data[message.author.tag]["calin"].timer - now
-                var heures = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
-                message.channel.send(message.author.username + 
-                " tu a déjà câliner quelqu'un aujourd'hui, réesayer dans " + heures + "H" + minutes + ":hourglass_flowing_sand: ")
-            }
-            else
-            {
-                data[mentionned.tag]["calin"].nombre++
-                data[message.author.tag]["calin"].timer = Date.now() + 43200000 //43200000 = 12h en millisecondes
-                fs.writeFile("./data.json", JSON.stringify(data,"","\t"), (err) => 
-                {
-                    if (err) console.error(err)
-                });
-                message.channel.send("**" + message.author.username + "** fait un câlin virtuel:hugging: à **" + mentionned.username + "**")
-            }
-        }
-    }
-    //========================================================================================//
-    //  Commande - prefix + bonus
-    //========================================================================================//
-    if (msgc.startsWith(prefix + "bonus"))
-    {
-        var mentionned = message.mentions.users.first()
-        if ((data[message.author.tag]["nyas"].timer > Date.now()))
-        {
-            var now = new Date().getTime()
-            var distance = data[message.author.tag]["nyas"].timer - now;
-            var heures = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
-            message.channel.send(message.author.username + 
-            " tu a déjà utilisé ton bonus de Nyas:moneybag: aujourd'hui, réessaye dans " + heures + "h" + minutes + ":hourglass_flowing_sand: ")
-        }
-        else 
-        {
-            if (!mentionned || mentionned == message.author)
-            {
-                data[message.author.tag]["nyas"].nombre =+ data[message.author.tag]["nyas"].nombre+5
-                data[message.author.tag]["nyas"].timer = Date.now() + 43200000 //43200000 = 12h en millisecondes
-                message.channel.send("**" + message.author.username + "** récupère 5 Nyas:moneybag:")
-            }
-            else
-            {
-                data[mentionned.tag]["nyas"].nombre =+ data[mentionned.tag]["nyas"].nombre+5
-                data[message.author.tag]["nyas"].timer = Date.now() + 43200000 //43200000 = 12h en millisecondes            
-                message.channel.send("**" + message.author.username + "** offre 5 Nyas:moneybag: à **" + mentionned.username + "**")
-            }
-            fs.writeFile("./data.json", JSON.stringify(data,"","\t"), (err) => 
-            {
-                if (err) console.error(err)
-            });
-        }
-    } 
     //========================================================================================//
 })
 client.login(config.token) //Recuperation du TOKEN dans les variables environnement
