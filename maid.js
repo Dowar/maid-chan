@@ -50,9 +50,6 @@ fs.readdir("./commandes/", (err, files) =>
 
 client.on("ready", () =>
 {
-    console.log("Maid-chan mise a jour !")
-    console.log(Date.now())
-    
     client.user.setGame("Serveuse","https://www.twitch.tv/IA")
     //client.user.setAvatar("./Images/maid_chan_noel.png")
 
@@ -89,6 +86,7 @@ client.on("ready", () =>
         })
         i++
     }
+    console.log("Maid-chan mise a jour !")
     //========================================================================================//
 })
 
