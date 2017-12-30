@@ -5,11 +5,11 @@ const http = require('http')
 const fs = require("fs-extra")
 
 let data = JSON.parse(fs.readFileSync("./data.json", "utf8"))
+//let dataDialogue = JSON.parse(fs.readFileSync("./IA/dialogues.json", "utf8"))
 
 var prefix = "!"
 var id = "393547720935211008"
 var tag = "Maid-chan#0518"
-
 //========================================================================================//
 //  Fonction pour le retrait des accents lors de la lecture du bot           
 //========================================================================================//
@@ -114,7 +114,7 @@ client.on("message", message =>
         try 
         {
             let commandFile = require(`./commandes/${commande}.js`)
-            commandFile.run(client ,fs , message, args, mentionned, data, commande, id, tag)
+            commandFile.run(client,fs,message,args,mentionned,data,commande,id,tag)
         } 
         catch (err) 
         {
@@ -127,7 +127,7 @@ client.on("message", message =>
         try 
         {
             let commandFile = require(`./IA/dialogues.js`)
-            commandFile.run(client ,fs , message, mentionned, data, dialogue, id, tag)
+            commandFile.run(client,fs,message,mentionned,data,dialogue,id,tag)
         } 
         catch (err) 
         {
