@@ -1,7 +1,7 @@
 //========================================================================================//
 //  Commande - prefix + bonus
 //========================================================================================//
-exports.run = (client ,fs , message, args, mentionned, data, commande, id, tag) => 
+exports.run = (client , fs, message, args, mentionned, data, commande, id, tag) => 
 {
         if ((data[message.author.tag]["nyas"].timer > Date.now()))
         {

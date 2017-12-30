@@ -1,7 +1,7 @@
 //========================================================================================//
 //  Commande - prefix + calin                                      
 //========================================================================================//
-exports.run = (client ,fs , message, args, mentionned, data, commande, id, tag) => 
+exports.run = (client , fs, message, args, mentionned, data, commande, id, tag) => 
 {
     if (!mentionned) 
     {

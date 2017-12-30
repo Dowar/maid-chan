@@ -46,6 +46,16 @@ fs.readdir("./commandes/", (err, files) =>
         client.on(eventName, (...args) => eventFunction.run(client, ...args))
     })
 })
+fs.readdir("./IA/", (err, files) => 
+{
+    if (err) return console.error(err)
+    files.forEach(file => 
+    {
+        let eventFunction = require(`./IA/dialogues.js`)
+        let eventName = file.split(".")[0]
+        client.on(eventName, (...args) => eventFunction.run(client, ...args))
+    })
+})
 //========================================================================================//
 
 client.on("ready", () =>
@@ -92,15 +102,14 @@ client.on("ready", () =>
 
 client.on("message", message =>
 {   
-    const mentionned = message.mentions.users.first()             //utilisateur mentionné
-    const dialogue =  message.content.toLowerCase().sansAccent()  //lecture de la phrase
-
+    if (message.author.bot) return;
+    const mentionned = message.mentions.users.first()   //utilisateur mentionné
     //========================================================================================//
     //  Commandes - Communications avec les fichiers externes                                    
     //========================================================================================//
-    if (message.content.startsWith("!"))
+    if (message.content.startsWith(prefix))
     {
-        const args = message.content.slice(prefix.length).trim().split(/ +/g);  //tableau avec tout les mots du message + suppresion prefix
+        const args = message.content.slice(prefix.length).trim().split(/ +/g)   //tableau avec tout les mots du message + suppresion prefix
         const commande = args.shift().toLowerCase().sansAccent()                //lecture de la commande
         try 
         {
@@ -112,100 +121,17 @@ client.on("message", message =>
             console.error(err)
         }
     }
-    //========================================================================================//
-    //  Dialogue - Dictionnaire                                     
-    //========================================================================================//
-    var salut = ["salut ","bonjour ","yo ","coucou ","hola ","hi ","もしもし ","привет ","buongiorno ","Konnichiwa ","你好 ","buenos dias ","ciao ","صباح الخير ","안녕하세요 "]
-    var cava = ["sa va","ca va"]
-    var malpoli = [" bite","chibre","penis","phallus","zizi"]
-    var maidchan = ["maidchan","maid-chan","maid","tout le monde","les gens"]
-    //========================================================================================//
-    //  Dialogue - Salut                                      
-    //========================================================================================//
-    if (salut.some(mots => dialogue.includes(mots))&&maidchan.some(mots => dialogue.includes(mots)))
+    else //lecture pour l'IA
     {
-        if (message.author.id !== id)
+        const dialogue = message.content.toLowerCase().sansAccent()  //lecture de la phrase
+        try 
         {
-            var r = Math.floor((Math.random()*10))
-            if(r<=4)
-            {
-                message.channel.send("Salut " + message.author.username + " !")
-            }
-            if(r>=5)
-            {
-                message.channel.send("Bonjour " + message.author.username + " !")
-            }
-        }
-    }
-    //========================================================================================//
-    //  Dialogue - ça va ?                                      
-    //========================================================================================//
-    if (cava.some(mots => dialogue.includes(mots))&&maidchan.some(mots => dialogue.includes(mots)))
-    {
-        if (message.author.id !== id)
+            let commandFile = require(`./IA/dialogues.js`)
+            commandFile.run(client ,fs , message, mentionned, data, dialogue, id, tag)
+        } 
+        catch (err) 
         {
-            var r = Math.floor((Math.random()*10))
-            if(r<=4)
-            {
-                message.channel.send("ça va !")
-            }
-            if(r>=5)
-            {
-                message.channel.send("ça va bien !")
-            }
-        }
-    }
-    //========================================================================================//
-    //  Dialogue - Censure                                      
-    //========================================================================================//
-    if (malpoli.some(mots => dialogue.includes(mots)))
-    {
-        if (message.author.id !== id)
-        {
-            var r = Math.floor((Math.random()*10))
-            if(r<=3)
-            {
-                message.channel.send("Malpoli !")
-            }
-            if(r>=4&&r<8)
-            {
-                message.channel.send("Malotru !")
-            }
-            if(r>=9)
-            {
-                message.channel.send("Goujat !")
-            }
-        }
-        message.delete()
-    }
-    //========================================================================================//
-    //  Dialogue - Joyeux noel                                     
-    //========================================================================================//
-    if (dialogue.startsWith("joyeux noel")||dialogue.startsWith("noyeux joel"))
-    {
-        if (message.author.id !== id)
-        {
-            var r = Math.floor((Math.random()*10))
-            if(r<=4)
-            {
-                message.channel.send("Joyeux Noël " + message.author.username + " !",
-                {
-                    files: 
-                    [
-                      "./images/noel_1.png"
-                    ]
-                })
-            }
-            if(r>=5)
-            {
-                message.channel.send("Joyeux Noël " + message.author.username + " !",
-                {
-                    files: 
-                    [
-                      "./images/noel_2.png"
-                    ]
-                })
-            }
+            console.error(err)
         }
     }
     //========================================================================================//
