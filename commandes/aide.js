@@ -1,4 +1,4 @@
-exports.run = (client,fs,message,mentionned,data,dialogue,id,tag) =>
+exports.run = (client,fs,message,mentionned,data,dialogue,id,tag,author) =>
 {
     async function help() {
         var i = 0

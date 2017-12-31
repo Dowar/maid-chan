@@ -91,9 +91,7 @@ client.on("ready", () =>
             }
         }
         fs.writeFile("./data.json", JSON.stringify(data,"","\t"), (err) =>
-        {
-            if (err) console.error(err)
-        })
+        {if (err) console.error(err)})
         i++
     }
     console.log("Maid-chan mise a jour !")
@@ -104,6 +102,7 @@ client.on("message", message =>
 {   
     if (message.author.bot) return;
     const mentionned = message.mentions.users.first()   //utilisateur mentionné
+    const author = message.author   //auteur du message
     //========================================================================================//
     //  Commandes - Communications avec les fichiers externes                                    
     //========================================================================================//
@@ -114,12 +113,9 @@ client.on("message", message =>
         try 
         {
             let commandFile = require(`./commandes/${commande}.js`)
-            commandFile.run(client,fs,message,args,mentionned,data,commande,id,tag)
+            commandFile.run(client,fs,message,args,mentionned,data,commande,id,tag,author)
         } 
-        catch (err) 
-        {
-            console.error(err)
-        }
+        catch (err) {console.error(err)}
     }
     else //lecture pour l'IA
     {
@@ -127,12 +123,9 @@ client.on("message", message =>
         try 
         {
             let commandFile = require(`./IA/dialogues.js`)
-            commandFile.run(client,fs,message,mentionned,data,dialogue,id,tag)
+            commandFile.run(client,fs,message,mentionned,data,dialogue,id,tag,author)
         } 
-        catch (err) 
-        {
-            console.error(err)
-        }
+        catch (err) {console.error(err)}
     }
     //========================================================================================//
 })

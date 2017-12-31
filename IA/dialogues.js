@@ -1,7 +1,7 @@
 //========================================================================================//
 //  Dialogues
 //========================================================================================//
-exports.run = (client,fs,message,mentionned,data,dialogue,id,tag) =>
+exports.run = (client,fs,message,mentionned,data,dialogue,id,tag,author) =>
 {
     //========================================================================================//
     //  Dictionnaire
@@ -19,13 +19,9 @@ exports.run = (client,fs,message,mentionned,data,dialogue,id,tag) =>
         {
             var r = Math.floor((Math.random()*10))
             if(r<=4)
-            {
-                message.channel.send("Salut " + message.author.username + " !")
-            }
+            {message.channel.send("Salut " + message.author.username + " !")}
             if(r>=5)
-            {
-                message.channel.send("Bonjour " + message.author.username + " !")
-            }
+            {message.channel.send("Bonjour " + message.author.username + " !")}
         }
     }
     //========================================================================================//
@@ -37,13 +33,9 @@ exports.run = (client,fs,message,mentionned,data,dialogue,id,tag) =>
         {
             var r = Math.floor((Math.random()*10))
             if(r<=4)
-            {
-                message.channel.send("ça va !")
-            }
+            {message.channel.send("ça va !")}
             if(r>=5)
-            {
-                message.channel.send("ça va bien !")
-            }
+            {message.channel.send("ça va bien !")}
         }
     }
     //========================================================================================//
@@ -55,17 +47,11 @@ exports.run = (client,fs,message,mentionned,data,dialogue,id,tag) =>
         {
             var r = Math.floor((Math.random()*10))
             if(r<=3)
-            {
-                message.channel.send("Malpoli !")
-            }
+            {message.channel.send("Malpoli !")}
             if(r>=4&&r<8)
-            {
-                message.channel.send("Malotru !")
-            }
+            {message.channel.send("Malotru !")}
             if(r>=9)
-            {
-                message.channel.send("Goujat !")
-            }
+            {message.channel.send("Goujat !")}
         }
         message.delete()
     }
