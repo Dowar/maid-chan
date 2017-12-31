@@ -33,7 +33,7 @@ exports.run = (client,fs,message,args,mentionned,data,commande,id,tag,author) =>
             })
             await messageInteractif.react("💶")
             await messageInteractif.react("🤗")
-            const collecteur = messageInteractif.createReactionCollector((reaction, user) => user.id === user.id)
+            const collecteur = messageInteractif.createReactionCollector((reaction, user) => user.id === author.id)
             collecteur.on("collect", async(reaction) => 
             {
                 if (reaction.emoji.name === "💶")
