@@ -102,7 +102,7 @@ client.on("message", message =>
 {   
     if (message.author.bot) return;
     const mentionned = message.mentions.users.first()   //utilisateur mentionné
-    const author = message.author   //auteur du message
+    const author = message.author                       //auteur du message
     //========================================================================================//
     //  Commandes - Communications avec les fichiers externes                                    
     //========================================================================================//
