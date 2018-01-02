@@ -9,7 +9,7 @@ exports.run = (client,fs,message,mentionned,data,dialogue,id,tag,author) =>
     var salut = ["salut ","bonjour ","yo ","coucou ","hola ","hi ","もしもし ","привет ","buongiorno ","Konnichiwa ","你好 ","buenos dias ","ciao ","صباح الخير ","안녕하세요 "]
     var cava = ["sa va","ca va"]
     var malpoli = [" bite","chibre","penis","phallus","zizi"]
-    var maidchan = ["maidchan","maid-chan","maid","tout le monde","les gens","a tous"]
+    var maidchan = ["maidchan","maid-chan","maid","tout le monde","les gens","a tous","les jean"]
     //========================================================================================//
     //  Salut
     //========================================================================================//
