@@ -78,16 +78,16 @@ client.on("ready", () =>
         {
             data[utilisateur[i]]["nyas"] = 
             {
-                nombre: "0",
-                timer: "0"
+                nombre: 0,
+                timer: 0,
             } 
         }
         if (!data[utilisateur[i]]["calin"])
         {
             data[utilisateur[i]]["calin"] = 
             {
-                nombre: "0",
-                timer: "0"
+                nombre: 0,
+                timer: 0,
             }
         }
         fs.writeFile("./data.json", JSON.stringify(data,"","\t"), (err) =>
