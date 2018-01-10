@@ -75,7 +75,7 @@ module.exports = (client) =>
     if (message.channel.type !=='text') return
     const settings = client.settings.get(message.guild.id)
     if (message.content.startsWith(settings.prefix)) return
-    const score = client.exp.get(message.author.id) || { exp: 0, lvl: 1 }
+    const score = client.exp.get(message.author.id) || { exp: 0, lvl: 0 }
     score.exp = score.exp+1
     const curLevel = 0.1 * Math.sqrt(score.exp)
     const curLevelAR = Math.floor(curLevel)
