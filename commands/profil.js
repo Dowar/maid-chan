@@ -41,9 +41,11 @@ exports.run = async (client, message, args, level, now, mentionned) =>
     else
     {
         client.logger.log("Lanceur: "+ mentionned.username + "(" + mentionned.id + ")", "debug")
+
         const mnyas = client.nyas.get(mentionned.id) || { number: 0, timer: 0 }
         const mcalin = client.calin.get(mentionned.id) || { number: 0, timer: 0 }
         const mexp = client.exp.get(mentionned.id) || { exp: 0, lvl: 0 }
+
         message.channel.send("", 
         {
             embed: 

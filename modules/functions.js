@@ -91,9 +91,9 @@ module.exports = (client) =>
 //========================================================================================//
 //  Prototypages
 //========================================================================================//
-  String.prototype.toProperCase = function() 
+  String.prototype.toProperCase = function() // Majuscule la première lettre de chaque mots
   {return this.replace(/([^\W_]+[^\s-]*) */g, function(txt) {return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()})}
-  Array.prototype.random = function() {return this[Math.floor(Math.random() * this.length)]} // aléatoire
+  Array.prototype.random = function() {return this[Math.floor(Math.random() * this.length)]} // Aléatoire
   String.prototype.sansAccent = function() // Retrait des accents pour faciliter la lecture du bot
   {
     var accent = 

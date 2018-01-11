@@ -1,9 +1,6 @@
 exports.run = async (client, message, args, level) =>
 {
-    let guild = message.guild
-    guild.delete()
-      .then(g => client.logger.log(`Maid-chan a supprimer l'instance : ${g}`,"debug"))
-      .catch(console.error)
+
 }
 
 exports.conf = 
