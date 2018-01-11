@@ -27,7 +27,9 @@ module.exports = (client) =>
       return collected.first().content
     } catch (e) {return false}
   }
-
+//========================================================================================//
+//  Nettoyage - utile pour Eval
+//========================================================================================//
   client.clean = async (client, text) => 
   {
     if (text && text.constructor.name == "Promise") {text = await text}
@@ -91,8 +93,8 @@ module.exports = (client) =>
 //========================================================================================//
   String.prototype.toProperCase = function() 
   {return this.replace(/([^\W_]+[^\s-]*) */g, function(txt) {return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()})}
-  Array.prototype.random = function() {return this[Math.floor(Math.random() * this.length)]}
-  String.prototype.sansAccent = function()
+  Array.prototype.random = function() {return this[Math.floor(Math.random() * this.length)]} // aléatoire
+  String.prototype.sansAccent = function() // Retrait des accents pour faciliter la lecture du bot
   {
     var accent = 
     [

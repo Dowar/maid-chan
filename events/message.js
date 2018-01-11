@@ -14,10 +14,10 @@ module.exports = (client, message) =>
   message.settings = settings
   if (message.content.indexOf(settings.prefix) !== 0) return // Ignore le message si pas de prefix
 
-  const args = message.content.slice(settings.prefix.length).trim().split(/ +/g)                // Récupere les arguments de la commande dans un tableau
-  const command = args.shift().toLowerCase().sansAccent()                                       // Met le message en minuscule et retire les accens
-  const level = client.permlevel(message)                                                       // Récupere les permissions de l'auteur du message
-  const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command))  // Récupere la commande/alias si elle existe
+  const args = message.content.slice(settings.prefix.length).trim().split(/ +/g)               // Récupere les arguments de la commande dans un tableau
+  const command = args.shift().toLowerCase().sansAccent()                                      // Met le message en minuscule et retire les accens
+  const level = client.permlevel(message)                                                      // Récupere les permissions de l'auteur du message
+  const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command)) // Récupere la commande/alias si elle existe
 
   if (!cmd) return                                 // Ignore si la commande n'existe pas
   if (cmd && !message.guild && cmd.conf.guildOnly) // Erreur si la commande est utiliser par MP alors qu'elle est reservé aux canaux de guildes
