@@ -1,6 +1,6 @@
-exports.run = (client, message, args, level, command) =>
+exports.run = (client, message, [action], level) =>
 {
-      if (args[0] === "add")
+      if (action === "add")
       {
             const djName  = "Donjon"
             async function createGuild(client, message)
@@ -21,7 +21,7 @@ exports.run = (client, message, args, level, command) =>
             createGuild(client, message)
                   .then(client.logger.log(`Maid-chan a cree l'instance : ${djName}`,"debug"))   
       }
-      if (args[0] === "del")
+      if (action === "del")
       {
             message.guild.delete()
                   .then(g => client.logger.log(`Maid-chan a supprimer l'instance : ${g}`,"debug"))

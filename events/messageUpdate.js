@@ -5,5 +5,5 @@ module.exports = (client, newMessage, message) =>
 
   //client.logger.log(now - edit + " Secondes depuis la création du message", "debug")
 
-  if(now - edit < 60) {client.emit("message", message)} else return // Comparaison pour verifier si le message est réçent et donc s'il doit être relu ou non
+  if(now - edit < 60) {client.emit("message", message)} else return // Ignore si le message existe depuis plus d'une minute
 }

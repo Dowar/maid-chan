@@ -83,7 +83,7 @@ module.exports = (client) =>
     const curLevelAR = Math.floor(curLevel)
     if (score.lvl < curLevelAR)
     {
-      message.reply(` gagne un niveau. **[LVL.${curLevelAR}]**`)
+      message.reply(` gagne un niveau. **[Niv.${curLevelAR+1}]**`)
       score.lvl = curLevel
     }
     client.exp.set(message.author.id, score)

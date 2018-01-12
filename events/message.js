@@ -15,7 +15,7 @@ module.exports = (client, message) =>
   if (message.content.indexOf(settings.prefix) !== 0) return // Ignore le message si pas de prefix
 
   const args = message.content.slice(settings.prefix.length).trim().split(/ +/g)               // Récupere les arguments de la commande dans un tableau
-  const command = args.shift().toLowerCase().sansAccent()                                      // Met le message en minuscule et retire les accens
+  const command = args.shift().toLowerCase().sansAccent()                                      // Sépare la commande de ses arguments et la rend insensible a la casse
   const level = client.permlevel(message)                                                      // Récupere les permissions de l'auteur du message
   const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command)) // Récupere la commande/alias si elle existe
 
@@ -35,9 +35,9 @@ module.exports = (client, message) =>
 
   message.author.permLevel = level
   message.flags = []                          // Création d'un système de flags qui
-  while (args[0] && args[0][0] === "-")       // récupère tous les argument du tableau 
+  while (args[0] && args[0][0] === "-")       // récupère toutes les valeurs du tableau 
   {message.flags.push(args.shift().slice(1))} // d'arguments pour en simplifier l'usage
 
   client.logger.cmd(`${client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) lance la commande ${cmd.help.name}`)
-  cmd.run(client, message, args, command, level, now, mentionned) //lance la commande envois des variables utile aux commandes
+  cmd.run(client, message, args, level, now, mentionned) //lance la commande envois des variables utile aux commandes
 }

@@ -24,7 +24,7 @@ exports.run = async (client, message, args, level, now, mentionned) =>
                         inline: true
                     },
                     {
-                        name: ":video_game: **Niveaux: **" + Math.floor(exp.lvl) ,
+                        name: ":video_game: **Niveaux: **" + Math.floor(exp.lvl+1) ,
                         value: ":game_die: EXP: " + Math.floor(exp.exp) + "/" + Math.floor(((exp.lvl+1)*(exp.lvl+1))*100),
                         inline: true
                     }
@@ -61,7 +61,7 @@ exports.run = async (client, message, args, level, now, mentionned) =>
                         inline: true
                     },
                     {
-                        name: ":video_game: **Niveaux: **" + Math.floor(mexp.lvl) ,
+                        name: ":video_game: **LEVEL: **" + Math.floor((mexp.lvl+1)),
                         value: ":game_die: EXP: " + Math.floor(mexp.exp) + "/" + Math.floor(((mexp.lvl+1)*(mexp.lvl+1))*100),
                         inline: true
                     }
@@ -73,7 +73,7 @@ exports.run = async (client, message, args, level, now, mentionned) =>
                     text: "Maid-chan V0.4"
                 }
             }
-        })   
+        })
     }
 }
 
