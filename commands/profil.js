@@ -53,10 +53,10 @@ exports.run = (client, message, args, level, now, mentionned) =>
             p_exp = exp_align.concat(p_exp)
         
         data[4]
-            .resize(exp_size*6, 42) // Redimension exp1 selon le pourcentage d'xp
+            .resize(exp_size*6, 42, Jimp.RESIZE_BICUBIC) // Redimension exp1 selon le pourcentage d'xp
  
-        data[0]
-            //Images
+        
+        data[0] //Images
             .mask(data[6],0,0)              // masque1  - arrondi background
             .composite(data[1],0,0)         // layer1   - fond transparent
             .composite(data[2],0,0)         // layer2   - cadre avatar
@@ -64,13 +64,17 @@ exports.run = (client, message, args, level, now, mentionned) =>
             .composite(data[4],376,506)     // exp2     - jauge exp
             .composite(data[5],52,226)      // avatar   - image de profil
             .composite(data[7],340,360)     // icone
-            //Texte
+
+        data[0] // Texte
             .print(font, 400, 350, p_pseudo) // pseudo
             .print(font3, 405, 410, p_nickname) // pseudo
             .print(font, 100, 500, p_lvl)    // niveau
             .print(font2, 434, 510, p_exp)   // xp
-            //Sauvegarde et envois
-            //.resize(256, 256)
+
+        if(args[0] != "hd")
+        {data[0].resize(512, 512, Jimp.RESIZE_BICUBIC)}
+
+        data[0] //Sauvegarde et envois
             .write(`data/profile/${cible.id}.png`, function() // Sauvegarde sous l'id de la cible
                 {
                     client.logger.log("Image crée avec succès", "debug")
