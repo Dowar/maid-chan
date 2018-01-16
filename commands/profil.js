@@ -71,8 +71,8 @@ exports.run = (client, message, args, level, now, mentionned) =>
             .print(font, 100, 500, p_lvl)    // niveau
             .print(font2, 434, 510, p_exp)   // xp
 
-        if(args[0] != "hd")
-        {data[0].resize(512, 512, Jimp.RESIZE_BICUBIC)}
+        //if(args[0] != "hd")
+        //{data[0].resize(512, 512, Jimp.RESIZE_BICUBIC)}
 
         data[0] //Sauvegarde et envois
             .write(`data/profile/${cible.id}.png`, function() // Sauvegarde sous l'id de la cible

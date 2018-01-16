@@ -1,8 +1,9 @@
 exports.run = async (client, message, args, level) => 
 {
-      const wumpus = client.emojis.find("name", "wumpus") || "🎉"
+      const name = args[0]
+      const emoji = client.emojis.find("name", name) || "🎉"
       message.delete()
-      message.channel.send(`${wumpus}`)
+      message.channel.send(`${emoji}`)
 }
 
 exports.conf = 
