@@ -6,7 +6,7 @@ exports.run = async (client, message, args, level) =>
   }
   else
   {
-    var emoji = message.guild.emojis.map(e=>e.toString()).join(" ")
+    var emoji = client.emojis.map(e=>e.toString()).join(" ") // Récupere toutes les emojis custom auquel il a accès
   }
   message.delete()
   message.channel.send(`${emoji}`)
