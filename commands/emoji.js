@@ -1,10 +1,18 @@
 exports.run = async (client, message, args, level) => 
 {
-      const name = args[0]
-      const emoji = client.emojis.find("name", name) || "🎉"
-      message.delete()
-      message.channel.send(`${emoji}`)
+  if(args[0])
+  {
+    var emoji = client.emojis.find("name", args[0]) || "🎉"
+  }
+  else
+  {
+    var emoji = message.guild.emojis.map(e=>e.toString()).join(" ")
+  }
+  message.delete()
+  message.channel.send(`${emoji}`)
 }
+
+
 
 exports.conf = 
 {
