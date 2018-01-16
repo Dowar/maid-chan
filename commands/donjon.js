@@ -13,9 +13,7 @@ exports.run = (client, message, [action], level) =>
                         await message.channel.send(invite.url)
                         //const role = await guild.createRole({ name:"MJ", color:"YELLOW" })
                         const chan1 = await guild.createChannel("Level 0","text")
-                        const chan2 = await guild.createChannel("Level 1","text")
-                        const chan3 = await guild.createChannel("Level 2","text")
-                        const chan4 = await guild.createChannel("cave","voice")
+                        const chan4 = await guild.createChannel("Level 1","voice")
                   } catch (e) {console.error(e)}
             }
             createGuild(client, message)

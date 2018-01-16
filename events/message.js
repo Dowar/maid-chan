@@ -39,5 +39,5 @@ module.exports = (client, message) =>
   {message.flags.push(args.shift().slice(1))} // d'arguments pour en simplifier l'usage
 
   client.logger.cmd(`${client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) lance la commande ${cmd.help.name}`)
-  cmd.run(client, message, args, level, now, mentionned) //lance la commande envois des variables utile aux commandes
+  cmd.run(client, message, args, level, now, mentionned) //lance la commande et envois des variables aux commandes
 }
