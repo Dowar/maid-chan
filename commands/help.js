@@ -19,7 +19,7 @@ exports.run = (client, message, args, level) =>
       }
       output += `${settings.prefix}${c.help.name}${" ".repeat(longest - c.help.name.length)} :: ${c.help.description}\n`
     })
-    message.channel.send(output, {code: "asciidoc", split: { char: "\u200b" }})
+    message.channel.send(output, {code: "asciidoc"})
   } 
   else 
   {
@@ -44,7 +44,7 @@ exports.conf =
 exports.help = 
 {
   name: "aide",
-  category: "Système",
-  description: "Affiche toutes les commandes disponible.",
-  usage: "aide [commande]"
+  category: "Divers",
+  description: "Affiche toutes les commandes disponible pour votre niveau de permission.",
+  usage: "aide <commande>"
 }

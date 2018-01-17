@@ -39,6 +39,6 @@ exports.help =
 {
   name: "donjon",
   category: "RPG",
-  description: "Ordonne à maid-chan de crée ou supprimer son serveur",
-  usage: "donjon [add,del]"
+  description: "Ordonne à maid-chan de crée ou supprimer son donjon",
+  usage: "donjon <add,del>"
 }

@@ -2,10 +2,14 @@ const moment = require("moment") //Dépendance pour la Date
 
 module.exports = (client, message) => 
 {
-  if (message.author.bot) return                    // Anti Botception
-  const now = moment().format("YYYYMMDD")           // Récupere la date au format année+mois+jours (exemple: 20180110)
-  const mentionned = message.mentions.users.first() // Récupere l'utilisateur mentionné
+  message.author.nickname = message.member.nickname
   client.pointsMonitor(client, message)             // Lancement du système d'EXP / LEVEL UP
+  if (message.author.bot) return                    // Anti Botception
+  var now = moment().format("YYYYMMDD")           // Récupere la date au format année+mois+jours (exemple: 20180110)
+  if (moment().format("HH") == 23) {now++}          // Réglage UTC+1
+       
+  else {const now = moment().format("YYYYMMDD")}
+  const mentionned = message.mentions.users.first() // Récupere l'utilisateur mentionné
 
   const settings = message.guild            //Récupère l'objet serveur
     ? client.settings.get(message.guild.id) //Récupère les paramètres si ils existent

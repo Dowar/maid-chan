@@ -19,7 +19,7 @@ exports.conf =
 {
   enabled: true,
   guildOnly: false,
-  aliases: [],
+  aliases: ["stat"],
   permLevel: "Utilisateur"
 }
 
@@ -27,6 +27,6 @@ exports.help =
 {
   name: "stats",
   category: "Divers",
-  description: "Donne quelques statistiques sur le bot.",
+  description: "Affiche des statistiques sur le bot.",
   usage: "stats"
 }

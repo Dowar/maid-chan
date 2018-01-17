@@ -21,5 +21,5 @@ exports.help =
   name: "reload",
   category: "Système",
   description: "Recharge une commande qui a été modifiée.",
-  usage: "reload [command]"
+  usage: "reload <commande>"
 }

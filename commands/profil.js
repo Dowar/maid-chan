@@ -6,10 +6,6 @@ const calcPercent = require("calc-percent") // Calcul de pourcentage
 exports.run = (client, message, args, level, now, mentionned) => 
 {
     const cible = mentionned || message.author // Cibler l'utilisateur mentionné sinon l'auteur du message
-    if (!mentionned) 
-    {
-        var nickname = message.member.nickname // Si pas de mention recupérer le surnom serveur
-    }
 
     const nyas = client.nyas.get(cible.id) || { number: 0, timer: 0 }   // Chargement des nyas de la cible
     const calin = client.calin.get(cible.id) || { number: 0, timer: 0 } // Chargement des calin reçu de la cible
@@ -34,12 +30,12 @@ exports.run = (client, message, args, level, now, mentionned) =>
     Jimp.loadFont(Jimp.FONT_SANS_32_BLACK) // Chargement police 2
     .then(function(font2)
     {
-    Jimp.loadFont(Jimp.FONT_SANS_32_WHITE) // Chargement police 2
+    Jimp.loadFont(Jimp.FONT_SANS_32_WHITE) // Chargement police 3
     .then(function(font3)
     {
         // Recuperation et conversion des données de la cible
         const p_pseudo = cible.username
-        const p_nickname = nickname || " "
+        const p_nickname = cible.nickname || " "
         const p_nyas = nyas.number
         const p_calin = calin.number
         const p_lvl = "Lvl." + Math.floor(exp.lvl+1)
@@ -66,13 +62,13 @@ exports.run = (client, message, args, level, now, mentionned) =>
             .composite(data[7],340,360)     // icone
 
         data[0] // Texte
-            .print(font, 400, 350, p_pseudo) // pseudo
-            .print(font3, 405, 410, p_nickname) // pseudo
-            .print(font, 100, 500, p_lvl)    // niveau
-            .print(font2, 434, 510, p_exp)   // xp
+            .print(font, 400, 350, p_pseudo)    // pseudo
+            .print(font3, 405, 410, p_nickname) // surnom
+            .print(font, 100, 500, p_lvl)       // niveau
+            .print(font2, 434, 510, p_exp)      // xp
 
         //if(args[0] != "hd")
-        //{data[0].resize(512, 512, Jimp.RESIZE_BICUBIC)}
+        //{data[0].resize(256, 256, Jimp.RESIZE_BICUBIC)}
 
         data[0] //Sauvegarde et envois
             .write(`data/profile/${cible.id}.png`, function() // Sauvegarde sous l'id de la cible
@@ -98,6 +94,6 @@ exports.help =
 {
   name: "profil",
   category: "RPG",
-  description: "Affiche tout un tas d'information (Lvl,Xp,Nyas,Calin...) sur toi",
-  usage: "profil [mention(optionnel)]"
+  description: "Affiche le profil (Lvl,Xp,Nyas,Badges...) de la cible",
+  usage: "profil <mention(optionnel)>"
 }

@@ -6,7 +6,9 @@ const moment = require("moment")
 
 exports.log = (content, type = "log") => 
 {
-  const timestamp = `[${moment().format("YYYY-MM-DD HH:mm:ss")}]:`
+  var date = moment().format("YYYY-MM-DD")  
+  var heure = moment().format("HH:mm:ss")
+  const timestamp = `[${date} ${heure}]:`
   switch (type) 
   {
     case "log": {return console.log(`${timestamp} ${chalk.bgBlue(type.toUpperCase())} ${content} `)}

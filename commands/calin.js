@@ -53,6 +53,6 @@ exports.help =
 {
   name: "calin",
   category: "RPG",
-  description: "Pour faire un calin à la personne de ton choix",
+  description: "Permet de faire un calin journalier à la personne de ton choix",
   usage: "calin [mention]"
 }

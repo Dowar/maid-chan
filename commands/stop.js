@@ -16,8 +16,8 @@ exports.conf =
 
 exports.help = 
 {
-  name: "reboot",
+  name: "stop",
   category: "Système",
-  description: "Eteint le bot.",
+  description: "Arrète le bot.",
   usage: "reboot"
 }

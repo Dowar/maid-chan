@@ -14,8 +14,8 @@ exports.conf =
 
 exports.help = 
 {
-  name: "mylevel",
+  name: "perm",
   category: "Divers",
-  description: "Affiche votre niveau de permission.",
-  usage: "mylevel"
+  description: "Affiche votre niveau de permission sur ce serveur.",
+  usage: "perm"
 }

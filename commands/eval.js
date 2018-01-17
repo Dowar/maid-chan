@@ -23,5 +23,5 @@ exports.help =
   name: "eval",
   category: "Système",
   description: "Execute du Javascript.",
-  usage: "eval [...code]"
+  usage: "eval <code>"
 }

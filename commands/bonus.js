@@ -43,5 +43,5 @@ exports.help =
   name: "bonus",
   category: "RPG",
   description: "Permet de récupèrer ton bonus de nyas journalier",
-  usage: "bonus [mention]"
+  usage: "bonus <mention(optionnel)>"
 }

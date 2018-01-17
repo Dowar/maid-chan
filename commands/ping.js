@@ -16,6 +16,6 @@ exports.help =
 {
   name: "ping",
   category: "Divers",
-  description: "Teste la latence du bot.",
+  description: "Affiche la latence du bot.",
   usage: "ping"
 }
