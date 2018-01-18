@@ -79,14 +79,22 @@ module.exports = (client) =>
     const settings = client.settings.get(message.guild.id)
     if (message.content.startsWith(settings.prefix)) return
     const score = client.exp.get(message.author.id) || { exp: 0, lvl: 0 }
-    score.exp = score.exp+10
+    score.exp = score.exp+1
     const curLevel = 0.1 * Math.sqrt(score.exp)
     const curLevelAR = Math.floor(curLevel)
     const wumpus = client.emojis.find("name", "wumpus") || "🎉"
     if (score.lvl < curLevelAR)
     {
-      message.channel.send(`${wumpus} ${name} gagne un niveau. **[Niv.${curLevelAR+1}]**`)
-      score.lvl = curLevel
+      if (!message.author.bot)
+      {
+        message.channel.send(`${wumpus} ${name} gagne un niveau. **[Niv.${curLevelAR+1}]**`)
+        score.lvl = curLevel
+      }
+      else if (message.author.username == 'Maid-chan')
+      {
+        message.channel.send(`${wumpus} J'ai gagner un niveau, youpiiii ! **[Niv.${curLevelAR+1}]**`)
+        score.lvl = curLevel
+      }
     }
     client.exp.set(message.author.id, score)
   }
