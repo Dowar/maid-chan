@@ -13,14 +13,17 @@ exports.run = (client, message, args, level, now, mentionned) =>
     const avatar = cible.avatarURL.toString().replace("2048", "256")    // Chargement de l'avatar de la cible
 
     // Liste d'image pour Jimp
-    var images = ["profile/background.png","profile/layer1_2.png","profile/layer2.png","profile/exp1.png","profile/exp2.png",avatar,"profile/mask1.png","profile/logo.png"]
+    var images = ["background","layer1","layer2","exp1","exp2",avatar,"mask1","logo","box"]
     var jimps = []
 
     for (var i = 0; i < images.length; i++) // Chargement de la lise
-    {jimps.push(Jimp.read(images[i]))}
+    {
+        if (images[i] === avatar) {jimps.push(Jimp.read(images[i]))}
+        else {jimps.push(Jimp.read("profile/" + images[i] + ".png"))}
+    }
 
     Promise.all(jimps) // Promesse
-    .then(function(data) 
+    .then(function(data)         
     {return Promise.all(jimps)})
     .then(function(data) 
     {
@@ -59,14 +62,27 @@ exports.run = (client, message, args, level, now, mentionned) =>
             .composite(data[3],356,500)     // exp1     - fond barre exp
             .composite(data[4],376,506)     // exp2     - jauge exp
             .composite(data[5],52,226)      // avatar   - image de profil
-            .composite(data[7],340,360)     // icone
+            .composite(data[7],340,365)     // icone    - discord
 
         data[0] // Texte
-            .print(font, 400, 350, p_pseudo)    // pseudo
-            .print(font3, 405, 410, p_nickname) // surnom
+            .print(font, 400, 355, p_pseudo)    // pseudo
+            .print(font3, 405, 415, p_nickname) // surnom
             .print(font, 100, 500, p_lvl)       // niveau
             .print(font2, 434, 510, p_exp)      // xp
 
+
+        if (cible.bot)
+        {
+            data[0] // Texte
+            .composite(data[8],335,285)
+            .print(font3, 353, 295, "BOT")
+        }
+        else if (cible.permLevel === 10)
+        {
+            data[0] // Texte
+            .composite(data[8],335,285)
+            .print(font3, 353, 295, "DEV")
+        }
         //if(args[0] != "hd")
         //{data[0].resize(256, 256, Jimp.RESIZE_BICUBIC)}
 

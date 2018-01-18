@@ -2,10 +2,10 @@ const moment = require("moment") //Dépendance pour la Date
 
 module.exports = (client, message) => 
 {
-  message.author.nickname = message.member.nickname
+  message.author.nickname = message.member.nickname // Ajout d'un raccourci vers le  surnom serveur
   client.pointsMonitor(client, message)             // Lancement du système d'EXP / LEVEL UP
   if (message.author.bot) return                    // Anti Botception
-  var now = moment().format("YYYYMMDD")           // Récupere la date au format année+mois+jours (exemple: 20180110)
+  var now = moment().format("YYYYMMDD")             // Récupere la date au format année+mois+jours (exemple: 20180110)
   if (moment().format("HH") == 23) {now++}          // Réglage UTC+1
        
   else {const now = moment().format("YYYYMMDD")}

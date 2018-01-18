@@ -1,12 +1,14 @@
 exports.run = async (client, message, [...emojis], level) => 
 {
-  if(emojis)
+  if(emojis.length)
   {
-    emojis.forEach(function(select) {emoji.push(client.emojis.find("name", select) || "🎉")})
+    emoji = []
+    emojis.forEach(function(select) {emoji.push(client.emojis.find("name", select) || select + " ")}) // Récupere dans un tableau tout les arguments
+    emoji = emoji.join('')                                                                            // Et les convertis en emoji si possible
   }
   else
   {
-    var emoji = client.emojis.map(e=>e.toString()).join(" ") // Récupere tout les emojis custom auquel le bot a accès
+    var emoji = client.emojis.map(e=>e.toString()).join(" ") // Récupere dans un tableau tout les emojis custom accesible
   }
   message.delete()
   message.channel.send(`${emoji}`)
