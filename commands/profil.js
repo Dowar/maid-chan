@@ -66,7 +66,7 @@ exports.run = (client, message, args, level, now, mentionned) =>
 
         data[0] // Texte
             .print(font, 400, 355, p_pseudo)    // pseudo
-            .print(font3, 405, 415, p_nickname) // surnom
+            .print(font3, 405, 420, p_nickname) // surnom
             .print(font, 100, 500, p_lvl)       // niveau
             .print(font2, 434, 510, p_exp)      // xp
 
