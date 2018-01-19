@@ -5,6 +5,7 @@ module.exports = (client, message) =>
   if (talkedRecently.has(message.author.id)) return                  // Cooldown commande
   talkedRecently.add(message.author.id)                              // Application cooldown a l'auteur
   setTimeout(() => {talkedRecently.delete(message.author.id)}, 1000) // Reinitialisation cooldown
+  
   client.pointsMonitor(client, message)             // Lancement du système d'EXP / LEVEL UP
   if (message.author.bot) return                    // Anti Botception
   var now = moment().format("YYYYMMDD")             // Récupere la date au format année+mois+jours (exemple: 20180110)
