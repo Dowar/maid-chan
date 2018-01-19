@@ -1,7 +1,9 @@
+//========================================================================================//
+//  Afficher Statistiques
+//========================================================================================//
 const { version } = require("discord.js")
 const moment = require("moment")
 require("moment-duration-format")
-
 exports.run = (client, message, args, level) => 
 {
   const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]")

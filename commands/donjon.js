@@ -1,3 +1,6 @@
+//========================================================================================//
+//  Creation/Suppresion Donjon
+//========================================================================================//
 exports.run = (client, message, [action], level) =>
 {
       if (action === "add")
@@ -12,8 +15,16 @@ exports.run = (client, message, [action], level) =>
                         const invite = await defaultChannel.createInvite()
                         await message.channel.send(invite.url)
                         //const role = await guild.createRole({ name:"MJ", color:"YELLOW" })
-                        const chan1 = await guild.createChannel("Level 0","text")
-                        const chan4 = await guild.createChannel("Level 1","voice")
+                        const chan1 = await guild.createChannel("Entree","text")
+                        const chan2 = await guild.createChannel("Niveau_1","text")
+                        const chan3 = await guild.createChannel("Niveau_2","text")
+                        const chan4 = await guild.createChannel("Niveau_3","text")
+                        const chan5 = await guild.createChannel("Niveau_4","text")
+                        const chan6 = await guild.createChannel("Niveau_5","text")
+                        const chan7 = await guild.createChannel("Communication_Mentale","voice")
+                        const general = await guild.channel.find("name","general")
+                        await general.delete()
+ 
                   } catch (e) {console.error(e)}
             }
             createGuild(client, message)

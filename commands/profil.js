@@ -1,11 +1,11 @@
-const Jimp = require("jimp")                // Manipulateur d'image
-const calcPercent = require("calc-percent") // Calcul de pourcentage
 //========================================================================================//
 //  Commande - prefix + profil + mention(optionnel)
 //========================================================================================//
+const Jimp = require("jimp")                // Manipulateur d'image
+const calcPercent = require("calc-percent") // Calcul de pourcentage
 exports.run = (client, message, args, level, now, mentionned) => 
 {
-    const cible = mentionned || message.author // Cibler l'utilisateur mentionné sinon l'auteur du message
+    const cible = mentionned || message.member // Cibler l'utilisateur mentionné sinon l'auteur du message
 
     const nyas = client.nyas.get(cible.id) || { number: 0, timer: 0 }   // Chargement des nyas de la cible
     const calin = client.calin.get(cible.id) || { number: 0, timer: 0 } // Chargement des calin reçu de la cible

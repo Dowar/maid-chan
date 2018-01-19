@@ -1,19 +1,20 @@
-const moment = require("moment") //Dépendance pour la Date
-
+const moment = require("moment") // Dépendance pour la Date
+const talkedRecently = new Set() // Constante cooldown commande
 module.exports = (client, message) => 
 {
-  message.author.nickname = message.member.nickname // Ajout d'un raccourci vers le  surnom serveur
+  if (talkedRecently.has(message.author.id)) return                  // Cooldown commande
+  talkedRecently.add(message.author.id)                              // Application cooldown a l'auteur
+  setTimeout(() => {talkedRecently.delete(message.author.id)}, 1000) // Reinitialisation cooldown
   client.pointsMonitor(client, message)             // Lancement du système d'EXP / LEVEL UP
   if (message.author.bot) return                    // Anti Botception
   var now = moment().format("YYYYMMDD")             // Récupere la date au format année+mois+jours (exemple: 20180110)
   if (moment().format("HH") == 23) {now++}          // Réglage UTC+1
-       
-  else {const now = moment().format("YYYYMMDD")}
+  else {const now = moment().format("YYYYMMDD")}    // Réglage UTC+1
   const mentionned = message.mentions.users.first() // Récupere l'utilisateur mentionné
 
-  const settings = message.guild            //Récupère l'objet serveur
-    ? client.settings.get(message.guild.id) //Récupère les paramètres si ils existent
-    : client.config.defaultSettings         //Sinon copier les paramètres par défaut
+  const settings = message.guild            // Récupère l'objet serveur
+    ? client.settings.get(message.guild.id) // Récupère les paramètres si ils existent
+    : client.config.defaultSettings         // Sinon copier les paramètres par défaut
 
   message.settings = settings
   if (message.content.indexOf(settings.prefix) !== 0) return // Ignore le message si pas de prefix
@@ -23,7 +24,7 @@ module.exports = (client, message) =>
   const level = client.permlevel(message)                                                      // Récupere les permissions de l'auteur du message
   const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command)) // Récupere la commande/alias si elle existe
 
-  if (!cmd) return                                 // Ignore si la commande n'existe pas
+  if (!cmd) return                                 // Ignorer si la commande n'existe pas
   if (cmd && !message.guild && cmd.conf.guildOnly) // Erreur si la commande est utiliser par MP alors qu'elle est reservé aux canaux de guildes
   {return message.channel.send("Cette commande n'est pas utilisable par message privé !")}
 
@@ -43,5 +44,5 @@ module.exports = (client, message) =>
   {message.flags.push(args.shift().slice(1))} // d'arguments pour en simplifier l'usage
 
   client.logger.cmd(`${client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) lance la commande ${cmd.help.name}`)
-  cmd.run(client, message, args, level, now, mentionned) //lance la commande et envois des variables aux commandes
+  cmd.run(client, message, args, level, now, mentionned) // Déclenche et envois des variables aux commandes
 }
