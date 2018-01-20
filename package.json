@@ -1,0 +1,28 @@
+{
+  "name": "maid-chan",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "index.js"
+  },
+  "engines": {
+    "node": "4.0"
+  },
+  "description": "Bot Discord Prive",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dowar/maid-chan.git"
+  },
+  "author": "Dowar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dowar/maid-chan/issues"
+  },
+  "homepage": "https://github.com/Dowar/maid-chan#readme",
+  "dependencies": {
+    "calc-percent": "^1.0.1",
+    "discord.js": "^11.3.0",
+    "jimp": "^0.2.28",
+    "moment": "^2.20.1"
+  }
+}
