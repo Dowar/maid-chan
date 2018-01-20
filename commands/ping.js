@@ -6,7 +6,9 @@ exports.run = async (client, message, args, level) =>
   const msg = await message.channel.send("Ping?")
   msg.edit(`Pong! Latence: ${msg.createdTimestamp - message.createdTimestamp}ms. Latence de l'API: ${Math.round(client.ping)}ms`)
 }
-
+//========================================================================================//
+//  Config
+//========================================================================================//
 exports.conf = 
 {
   enabled: true,
@@ -14,7 +16,9 @@ exports.conf =
   aliases: [],
   permLevel: "Utilisateur"
 }
-
+//========================================================================================//
+//  Aide
+//========================================================================================//
 exports.help = 
 {
   name: "ping",

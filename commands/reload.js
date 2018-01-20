@@ -10,7 +10,9 @@ exports.run = async (client, message, args, level) =>
   if (response) return message.reply(`Erreur de chargement: ${response}`)
   message.reply(`La commande \`${args[0]}\` a été recharger`)
 }
-
+//========================================================================================//
+//  Config
+//========================================================================================//
 exports.conf = 
 {
   enabled: true,
@@ -18,7 +20,9 @@ exports.conf =
   aliases: [],
   permLevel: "Admin Bot"
 }
-
+//========================================================================================//
+//  Aide
+//========================================================================================//
 exports.help = 
 {
   name: "reload",

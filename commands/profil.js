@@ -1,13 +1,19 @@
 //========================================================================================//
-//  Commande - prefix + profil + mention(optionnel)
+//  Dépendances
 //========================================================================================//
 const Jimp = require("jimp")                // Manipulateur d'image
 const calcPercent = require("calc-percent") // Calcul de pourcentage
-exports.run = (client, message, args, level, now, mentionned) => 
+//========================================================================================//
+//  Commande - prefix + profil + mention(optionnel)
+//========================================================================================//
+exports.run = async(client, message, args, level, now, mentionned) => 
 {
+    message.channel.startTyping() // Simule debut tappage clavier
+
     const cible = mentionned || message.author        // Cibler l'utilisateur mentionné sinon l'auteur du message
     message.author.nickname = message.member.nickname // Récupération surnom serveur pour profil sans mention
 
+    // Variables profil
     const nyas = client.nyas.get(cible.id) || { number: 0, timer: 0 }   // Chargement des nyas de la cible
     const calin = client.calin.get(cible.id) || { number: 0, timer: 0 } // Chargement des calin reçu de la cible
     const exp = client.exp.get(cible.id) || { exp: 0, lvl: 0 }          // Chargement des points d'xp de la cible
@@ -90,15 +96,23 @@ exports.run = (client, message, args, level, now, mentionned) =>
         data[0] //Sauvegarde et envois
             .write(`data/profile/${cible.id}.png`, function() // Sauvegarde sous l'id de la cible
                 {
-                    client.logger.log("Image crée avec succès", "debug")
-                    message.channel.send({file: `data/profile/${cible.id}.png`})
+                    async function envois()
+                    {
+                        await client.logger.log("Image crée avec succès", "debug")
+                        await message.channel.send({file: `data/profile/${cible.id}.png`}) // Envois image de profil
+                        await client.logger.log("Image envoyé avec succès", "debug")
+                        await message.channel.stopTyping() // Simule fin tappage clavier
+                    }
+                    envois()
                 })
             })
     })
     })
     })
 }
-
+//========================================================================================//
+//  Config
+//========================================================================================//
 exports.conf = 
 {
   enabled: true,
@@ -106,7 +120,9 @@ exports.conf =
   aliases: [],
   permLevel: "Utilisateur"
 }
-
+//========================================================================================//
+//  Aide
+//========================================================================================//
 exports.help = 
 {
   name: "profil",

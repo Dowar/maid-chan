@@ -6,7 +6,9 @@ exports.run = async (client, message, args, level) =>
   const friendly = client.config.permLevels.find(l => l.level === level).name
   message.reply(`Votre niveau de permissions est de ${level} - ${friendly}`)
 }
-
+//========================================================================================//
+//  Config
+//========================================================================================//
 exports.conf = 
 {
   enabled: true,
@@ -14,7 +16,9 @@ exports.conf =
   aliases: [],
   permLevel: "Utilisateur"
 }
-
+//========================================================================================//
+//  Aide
+//========================================================================================//
 exports.help = 
 {
   name: "perm",
