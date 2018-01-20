@@ -6,7 +6,7 @@ const calcPercent = require("calc-percent") // Calcul de pourcentage
 //========================================================================================//
 //  Commande - prefix + profil + mention(optionnel)
 //========================================================================================//
-exports.run = async(client, message, args, level, now, mentionned) => 
+exports.run = async(client, message, args, level, now, mentionned) =>
 {
     message.channel.startTyping() // Simule debut tappage clavier
 
@@ -14,18 +14,19 @@ exports.run = async(client, message, args, level, now, mentionned) =>
     message.author.nickname = message.member.nickname // Récupération surnom serveur pour profil sans mention
 
     // Variables profil
-    const nyas = client.nyas.get(cible.id) || { number: 0, timer: 0 }   // Chargement des nyas de la cible
-    const calin = client.calin.get(cible.id) || { number: 0, timer: 0 } // Chargement des calin reçu de la cible
-    const exp = client.exp.get(cible.id) || { exp: 0, lvl: 0 }          // Chargement des points d'xp de la cible
-    const avatar = cible.avatarURL.toString().replace("2048", "256")    // Chargement de l'avatar de la cible
+    const nyas = client.nyas.get(cible.id) || { number: 0, timer: 0 }               // Chargement des nyas de la cible
+    const calin = client.calin.get(cible.id) || { number: 0, timer: 0 }             // Chargement des calin reçu de la cible
+    const exp = client.exp.get(cible.id) || { exp: 0, lvl: 0 }                      // Chargement des points d'xp de la cible
+    const avatar = cible.avatarURL.toString().replace("size=2048", "size=256")      // Chargement de l'avatar de la cible
+    const background = cible.avatarURL.toString().replace("size=2048", "size=1024") // Chargement de l'avatar de la cible pour le background ||TEST||
 
     // Liste d'image pour Jimp
-    var images = ["background","layer1","layer2","exp1","exp2",avatar,"mask1","logo","box"]
+    var images = [background,"layer1","layer2","exp1","exp2",avatar,"mask1","logo","box"]
     var jimps = []
 
     for (var i = 0; i < images.length; i++) // Chargement de la lise
     {
-        if (images[i] === avatar) {jimps.push(Jimp.read(images[i]))}
+        if (images[i] === avatar || images[i] === background) {jimps.push(Jimp.read(images[i]))}
         else {jimps.push(Jimp.read("profile/" + images[i] + ".png"))}
     }
 
