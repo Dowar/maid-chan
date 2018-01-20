@@ -76,6 +76,8 @@ exports.run = async(client, message, args, level, now, mentionned) =>
             .print(font3, 405, 420, p_nickname) // surnom
             .print(font, 100, 500, p_lvl)       // niveau
             .print(font2, 434, 510, p_exp)      // xp
+            .print(font2, 434, 530, p_nyas)     // nyas
+            .print(font2, 434, 560, p_calin)    // calin
 
 
         if (cible.bot)
