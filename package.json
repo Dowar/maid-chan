@@ -1,28 +1,33 @@
 {
-  "name": "maid-chan",
-  "version": "0.1.0",
+  "name": "maid_chan",
+  "version": "0.0.1",
+  "description": "private discord bot",
   "main": "index.js",
   "scripts": {
-    "start": "index.js"
+    "start": "node index.js"
   },
-  "engines": {
-    "node": "4.0"
-  },
-  "description": "Bot Discord Prive",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Dowar/maid-chan.git"
-  },
-  "author": "Dowar",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Dowar/maid-chan/issues"
-  },
-  "homepage": "https://github.com/Dowar/maid-chan#readme",
   "dependencies": {
     "calc-percent": "^1.0.1",
+    "chalk": "^2.3.0",
     "discord.js": "^11.3.0",
+    "enmap": "^0.4.2",
+    "enmap-level": "^1.0.0",
+    "express": "^4.16.2",
+    "fs-extra": "^5.0.0",
     "jimp": "^0.2.28",
-    "moment": "^2.20.1"
-  }
+    "moment": "^2.20.1",
+    "moment-duration-format": "^2.1.1"
+  },
+  "engines": {
+    "node": "8.x"
+  },
+  "repository": {
+    "url": "https://glitch.com/edit/#!/welcome-project"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "glitch",
+    "express"
+  ]
 }
