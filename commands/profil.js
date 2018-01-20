@@ -61,7 +61,9 @@ exports.run = async(client, message, args, level, now, mentionned) =>
         
         data[4]
             .resize(exp_size*6, 42, Jimp.RESIZE_BICUBIC) // Redimension exp1 selon le pourcentage d'xp
- 
+
+        data[0]
+            .resize(1024, 1024, Jimp.RESIZE_BICUBIC)
         
         data[0] //Images
             .mask(data[6],0,0)              // masque1  - arrondi background
@@ -93,8 +95,6 @@ exports.run = async(client, message, args, level, now, mentionned) =>
             .composite(data[8],335,285)
             .print(font3, 353, 295, "DEV")
         }
-        //if(args[0] != "hd")
-        //{data[0].resize(256, 256, Jimp.RESIZE_BICUBIC)}
 
         data[0] //Sauvegarde et envois
             .write(`data/profile/${cible.id}.png`, function() // Sauvegarde sous l'id de la cible
