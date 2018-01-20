@@ -46,8 +46,8 @@ exports.run = async(client, message, args, level, now, mentionned) =>
         // Recuperation et conversion des données de la cible
         const p_pseudo = cible.username
         const p_nickname = cible.nickname || " "
-        const p_nyas = nyas.number
-        const p_calin = calin.number
+        const p_nyas = "Nyas :" + nyas.number.toString()
+        const p_calin = "Calin :" + calin.number.toString()
         const p_lvl = "Lvl." + Math.floor(exp.lvl+1)
         const exp_now = Math.floor(exp.exp) - Math.floor(((exp.lvl)*(exp.lvl))*100)
         const exp_need = Math.floor(((exp.lvl+1)*(exp.lvl+1))*100) - Math.floor(((exp.lvl)*(exp.lvl))*100)
@@ -76,8 +76,8 @@ exports.run = async(client, message, args, level, now, mentionned) =>
             .print(font3, 405, 420, p_nickname) // surnom
             .print(font, 100, 500, p_lvl)       // niveau
             .print(font2, 434, 510, p_exp)      // xp
-            .print(font2, 434, 530, p_nyas)     // nyas
-            .print(font2, 434, 560, p_calin)    // calin
+            .print(font2, 414, 550, p_nyas)     // nyas
+            .print(font2, 414, 580, p_calin)    // calin
 
 
         if (cible.bot)
