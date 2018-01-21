@@ -17,16 +17,17 @@ exports.run = async(client, message, args, level, now, mentionned) =>
     const nyas = client.nyas.get(cible.id) || { number: 0, timer: 0 }               // Chargement des nyas de la cible
     const calin = client.calin.get(cible.id) || { number: 0, timer: 0 }             // Chargement des calin reçu de la cible
     const exp = client.exp.get(cible.id) || { exp: 0, lvl: 0 }                      // Chargement des points d'xp de la cible
-    const avatar = cible.avatarURL.toString().replace("size=2048", "size=256")      // Chargement de l'avatar de la cible
-    const background = cible.avatarURL.toString().replace("size=2048", "size=1024") // Chargement de l'avatar de la cible pour le background ||TEST||
+    const avatar = cible.avatarURL.toString().replace("size=2048", "size=512")      // Chargement de l'avatar de la cible
+    const servicon = message.guild.iconURL.toString().replace(".jpg", ".png")       // Chargement de l'icone du serveur
+    //const background = cible.avatarURL.toString().replace("size=2048", "size=1024") // Chargement de l'avatar de la cible pour le background ||TEST||
 
     // Liste d'image pour Jimp
-    var images = [background,"layer1","layer2","exp1","exp2",avatar,"mask1","logo","box"]
+    var images = ["background","mask1","layer1","exp","mask2","mask3",avatar,"mask4","logo","box",servicon,"mask5"]
     var jimps = []
 
     for (var i = 0; i < images.length; i++) // Chargement de la lise
     {
-        if (images[i] === avatar || images[i] === background) {jimps.push(Jimp.read(images[i]))}
+        if (images[i] === avatar || images[i] === servicon) {jimps.push(Jimp.read(images[i]))}
         else {jimps.push(Jimp.read("profile/" + images[i] + ".png"))}
     }
 
@@ -47,8 +48,8 @@ exports.run = async(client, message, args, level, now, mentionned) =>
         // Recuperation et conversion des données de la cible
         const p_pseudo = cible.username
         const p_nickname = cible.nickname || " "
-        const p_nyas = "Nyas :" + nyas.number.toString()
-        const p_calin = "Calin :" + calin.number.toString()
+        const p_nyas = nyas.number.toString()
+        const p_calin = calin.number.toString()
         const p_lvl = "Lvl." + Math.floor(exp.lvl+1)
         const exp_now = Math.floor(exp.exp) - Math.floor(((exp.lvl)*(exp.lvl))*100)
         const exp_need = Math.floor(((exp.lvl+1)*(exp.lvl+1))*100) - Math.floor(((exp.lvl)*(exp.lvl))*100)
@@ -59,41 +60,54 @@ exports.run = async(client, message, args, level, now, mentionned) =>
             const exp_align = " ".repeat(30 - p_exp.length) // Centrage texte xp
             p_exp = exp_align.concat(p_exp)
         
-        data[4]
-            .resize(exp_size*6, 42, Jimp.RESIZE_BICUBIC) // Redimension exp1 selon le pourcentage d'xp
+        data[3]
+            .resize(exp_size*6, 58, Jimp.RESIZE_BICUBIC) // Redimension exp selon le pourcentage d'xp
+            .mask(data[4],0,0)                           // mask2    - arrondi barre xp
+            .mask(data[5],(exp_size*6)-10,0)             // mask3    - arrondi barre xp
 
-        data[0]
-            .resize(1024, 1024, Jimp.RESIZE_BICUBIC)
+        data[6]
+            .resize(314, 314, Jimp.RESIZE_BICUBIC)
+            .mask(data[7],0,0) // mask4    - arrondi avatar
+
+        data[10]
+            .resize(50, 50, Jimp.RESIZE_BICUBIC)
+            .mask(data[11],0,0) // mask5    - arrondi serveur icone
+
+        //data[0]
+        //    .resize(1024, 1024, Jimp.RESIZE_BICUBIC)
         
         data[0] //Images
-            .mask(data[6],0,0)              // masque1  - arrondi background
-            .composite(data[1],0,0)         // layer1   - fond transparent
-            .composite(data[2],0,0)         // layer2   - cadre avatar
-            .composite(data[3],356,500)     // exp1     - fond barre exp
-            .composite(data[4],376,506)     // exp2     - jauge exp
-            .composite(data[5],52,226)      // avatar   - image de profil
-            .composite(data[7],340,365)     // icone    - discord
+            .mask(data[1],0,0)               // mask1    - arrondi background
+            .composite(data[2],0,0)          // layer1   - fond transparent
+            .composite(data[3],390,490)      // exp      - barre exp
+            .composite(data[6],39,214)       // avatar   - image de profil
+            .composite(data[8],375,365)      // icone    - logo discord
+            .composite(data[10],375,415)     // icone    - logo serveur
 
         data[0] // Texte
-            .print(font, 400, 355, p_pseudo)    // pseudo
-            .print(font3, 405, 420, p_nickname) // surnom
-            .print(font, 100, 500, p_lvl)       // niveau
-            .print(font2, 434, 510, p_exp)      // xp
-            .print(font2, 414, 550, p_nyas)     // nyas
-            .print(font2, 414, 580, p_calin)    // calin
+            .print(font, 435, 355, p_pseudo)            // pseudo
+            .print(font3, 440, 420, p_nickname)         // surnom
+            .print(font, 60, 625, p_lvl)                // niveau
+            .print(font2, 434, 500, p_exp)              // xp
+            .print(font2, 275, 635, "Nyas :")           // nyas texte
+            .print(font2, 580, 635, p_nyas)             // nyas valeur
+            .print(font2, 275, 665, "Calins Reçus :")   // calin texte
+            .print(font2, 580, 665, p_calin)            // calin valeur
+            .print(font2, 365, 568, "Statistiques")     // stats
+            .print(font2, 265, 778, "Description")      // description
 
-
+//314
         if (cible.bot)
         {
             data[0] // Texte
-            .composite(data[8],335,285)
-            .print(font3, 353, 295, "BOT")
+            .composite(data[9],385,285)
+            .print(font3, 403, 295, "BOT")
         }
         else if (cible.permLevel === 10)
         {
             data[0] // Texte
-            .composite(data[8],335,285)
-            .print(font3, 353, 295, "DEV")
+            .composite(data[9],385,285)
+            .print(font3, 403, 295, "DEV")
         }
 
         data[0] //Sauvegarde et envois
