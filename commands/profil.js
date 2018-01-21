@@ -22,7 +22,7 @@ exports.run = async(client, message, args, level, now, mentionned) =>
     //const background = cible.avatarURL.toString().replace("size=2048", "size=1024") // Chargement de l'avatar de la cible pour le background ||TEST||
 
     // Liste d'image pour Jimp
-    var images = ["background","mask1","layer1","exp","mask2","mask3",avatar,"mask4","logo","box",servicon,"mask5"]
+    var images = ["background","mask1","layer1_2","exp","mask2","mask3",avatar,"mask4","logo","box",servicon,"mask5"]
     var jimps = []
 
     for (var i = 0; i < images.length; i++) // Chargement de la lise
@@ -96,7 +96,6 @@ exports.run = async(client, message, args, level, now, mentionned) =>
             .print(font2, 365, 568, "Statistiques")     // stats
             .print(font2, 265, 778, "Description")      // description
 
-//314
         if (cible.bot)
         {
             data[0] // Texte
