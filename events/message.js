@@ -53,7 +53,7 @@ module.exports = (client, message) =>
   {
     if (settings.systemNotice === "true") // Si le système de notice est activé dans les paramètres serveur
     {
-      return message.channel.send(`tu n'a pas les permissions requise pour utiliser cette commande.
+      return message.channel.send(`Tu n'as pas les permissions requises pour utiliser cette commande.
       Votre niveau de permission est de ${level} (${client.config.permLevels.find(l => l.level === level).name})
       Cette commande requiert un niveau de ${client.levelCache[cmd.conf.permLevel]} (${cmd.conf.permLevel})`)
     } else {return}
@@ -61,7 +61,7 @@ module.exports = (client, message) =>
 
   // Raccourcis
   message.author.permLevel = level                                       // Ajout d'un raccourci vers les permissions
-  if (message.guild) {message.author.nickname = message.member.nickname} // Récupération surnom serveur de l'auteur
+  if (message.guild) {message.author.nickname = message.member.nickname || message.author.username} // Récupération surnom serveur de l'auteur
 
   // Système de flag
   message.flags = []                          // Création d'un système de flags qui

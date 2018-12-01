@@ -1,5 +1,5 @@
 //========================================================================================//
-// Afficher Emoji / Texte
+//  Afficher Emoji / Texte
 //========================================================================================//
 exports.run = async (client, message, [...emojis], level) => 
 {
@@ -8,12 +8,12 @@ exports.run = async (client, message, [...emojis], level) =>
     emoji = []
     emojis.forEach(function(select) {emoji.push(client.emojis.find("name", select) || select + " ")}) // Récupere dans un tableau tout les arguments
     emoji = emoji.join('')                                                                            // Et les convertis en emoji si possible
+    message.delete()                                                                                  
   }
   else
   {
-    var emoji = client.emojis.map(e=>e.toString()).join(" ") // Récupere dans un tableau tout les emojis custom accesible
+    var emoji = client.emojis.map(e=>e.toString()).join(" ") || "Aucun Emoji Custom Disponible" // Récupere dans un tableau tout les emojis custom accesible
   }
-  message.delete()
   message.channel.send(`${emoji}`)
 }
 //========================================================================================//

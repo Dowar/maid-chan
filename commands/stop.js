@@ -26,5 +26,5 @@ exports.help =
   name: "stop",
   category: "Système",
   description: "Arrète le bot.",
-  usage: "reboot"
+  usage: "stop"
 }

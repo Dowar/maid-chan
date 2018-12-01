@@ -4,25 +4,28 @@
 const Jimp = require("jimp")                // Manipulateur d'image
 const calcPercent = require("calc-percent") // Calcul de pourcentage
 //========================================================================================//
-//  Commande - prefix + profil + mention(optionnel)
+//  Profil RPG
 //========================================================================================//
 exports.run = async(client, message, args, level, now, mentionned) =>
 {
     message.channel.startTyping() // Simule debut tappage clavier
 
-    const cible = mentionned || message.author        // Cibler l'utilisateur mentionné sinon l'auteur du message
-    message.author.nickname = message.member.nickname // Récupération surnom serveur pour profil sans mention
+    // Variables textes
+    const cible = mentionned || message.author                                  // Cibler l'utilisateur mentionné sinon l'auteur du message
+    message.author.nickname = message.member.nickname                           // Récupération surnom serveur pour profil sans mention
+    const nyas = client.nyas.get(cible.id) || { number: 0, timer: 0 }           // Chargement des nyas
+    const calin = client.calin.get(cible.id) || { number: 0, timer: 0 }         // Chargement des calin reçu
+    const exp = client.exp.get(cible.id) || { exp: 0, lvl: 0 }                  // Chargement des points d'xp
 
-    // Variables profil
-    const nyas = client.nyas.get(cible.id) || { number: 0, timer: 0 }               // Chargement des nyas de la cible
-    const calin = client.calin.get(cible.id) || { number: 0, timer: 0 }             // Chargement des calin reçu de la cible
-    const exp = client.exp.get(cible.id) || { exp: 0, lvl: 0 }                      // Chargement des points d'xp de la cible
-    const avatar = cible.avatarURL.toString().replace("size=2048", "size=512")      // Chargement de l'avatar de la cible
-    const servicon = message.guild.iconURL.toString().replace(".jpg", ".png")       // Chargement de l'icone du serveur
-    //const background = cible.avatarURL.toString().replace("size=2048", "size=1024") // Chargement de l'avatar de la cible pour le background ||TEST||
+    // Variables images
+    const avatar = cible.avatarURL.toString().replace("2048", "512")            // Chargement de l'avatar
+    const servicon = message.guild.iconURL.toString().replace(".jpg", ".png")   // Chargement de l'icone du serveur
+    const badges_slots = [0,0,0,0,0,0,0,0,0,0,0,0]                              // Chargement des badges dans leurs slots
+    const badges_level = [0,0,0,0,0,0,0,0,0,0,0,0]                              // Chargement des niveaux des badges
+    //const background = cible.avatarURL.toString().replace("2048", "1024")     // Chargement de l'avatar de la cible pour le background ||TEST||
 
-    // Liste d'image pour Jimp
-    var images = ["background","mask1","layer1","exp","mask2","mask3",avatar,"mask4","logo","box",servicon,"mask5"]
+    // Chargement d'image pour Jimp
+    var images = ["background","mask1","layer1","exp","mask2","mask3",avatar,"mask4","logo","box",servicon,"mask5","badge2_10"]
     var jimps = []
 
     for (var i = 0; i < images.length; i++) // Chargement de la lise
@@ -60,21 +63,18 @@ exports.run = async(client, message, args, level, now, mentionned) =>
             const exp_align = " ".repeat(30 - p_exp.length) // Centrage texte xp
             p_exp = exp_align.concat(p_exp)
         
-        data[3]
-            .resize(exp_size*6, 58, Jimp.RESIZE_BICUBIC) // Redimension exp selon le pourcentage d'xp
-            .mask(data[4],0,0)                           // mask2    - arrondi barre xp
-            .mask(data[5],(exp_size*6)-10,0)             // mask3    - arrondi barre xp
+        data[3] //Images
+            .resize(exp_size*6, 58, Jimp.RESIZE_BICUBIC)    // Redimension exp selon le pourcentage d'xp
+            .mask(data[4],0,0)                              // mask2    - arrondi debut barre xp
+            .mask(data[5],(exp_size*6)-10,0)                // mask3    - arrondi fin barre xp
 
-        data[6]
+        data[6] //Images
             .resize(314, 314, Jimp.RESIZE_BICUBIC)
-            .mask(data[7],0,0) // mask4    - arrondi avatar
+            .mask(data[7],0,0)              // mask4    - arrondi avatar
 
-        data[10]
+        data[10] //Images
             .resize(50, 50, Jimp.RESIZE_BICUBIC)
-            .mask(data[11],0,0) // mask5    - arrondi serveur icone
-
-        //data[0]
-        //    .resize(1024, 1024, Jimp.RESIZE_BICUBIC)
+            .mask(data[11],0,0)             // mask5    - arrondi serveur icone
         
         data[0] //Images
             .mask(data[1],0,0)               // mask1    - arrondi background
@@ -83,6 +83,7 @@ exports.run = async(client, message, args, level, now, mentionned) =>
             .composite(data[6],39,214)       // avatar   - image de profil
             .composite(data[8],375,365)      // icone    - logo discord
             .composite(data[10],375,415)     // icone    - logo serveur
+            //.composite(data[12],679,575)     // badge1   - test
 
         data[0] // Texte
             .print(font, 435, 355, p_pseudo)            // pseudo
@@ -109,6 +110,9 @@ exports.run = async(client, message, args, level, now, mentionned) =>
             .print(font3, 403, 295, "DEV")
         }
 
+        data[0]
+            .resize(1024, 1024, Jimp.RESIZE_BICUBIC)
+
         data[0] //Sauvegarde et envois
             .write(`data/profile/${cible.id}.png`, function() // Sauvegarde sous l'id de la cible
                 {
@@ -116,7 +120,7 @@ exports.run = async(client, message, args, level, now, mentionned) =>
                     {
                         await client.logger.log("Image crée avec succès", "debug")
                         await message.channel.send({file: `data/profile/${cible.id}.png`}) // Envois image de profil
-                        await client.logger.log("Image envoyé avec succès", "debug")
+                        await client.logger.log("Image envoyée avec succès", "debug")
                         await message.channel.stopTyping() // Simule fin tappage clavier
                     }
                     envois()
