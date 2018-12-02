@@ -25,7 +25,7 @@ exports.run = async(client, message, args, level, now, mentionned) =>
     //const background = cible.avatarURL.toString().replace("2048", "1024")     // Chargement de l'avatar de la cible pour le background ||TEST||
 
     // Chargement d'image pour Jimp
-    var images = ["background","mask1","layer1","exp","mask2","mask3",avatar,"mask4","logo","box",servicon,"mask5","badge2_10"]
+    var images = ["background","mask1","layer1","exp","mask2","mask3",avatar,"mask4","logo","box",servicon,"mask5"]
     var jimps = []
 
     for (var i = 0; i < images.length; i++) // Chargement de la lise
