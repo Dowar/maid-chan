@@ -90,7 +90,7 @@ exports.run = async(client, message, args, level, now, mentionned) =>
             .print(font3, 440, 420, p_nickname)         // surnom
             .print(font, 60, 625, p_lvl)                // niveau
             .print(font2, 434, 500, p_exp)              // xp
-            .print(font2, 275, 635, "Nyas :")           // nyas texte
+            .print(font2, 275, 635, "Nyasssssss :")           // nyas texte
             .print(font2, 580, 635, p_nyas)             // nyas valeur
             .print(font2, 275, 665, "Calins Reçus :")   // calin texte
             .print(font2, 580, 665, p_calin)            // calin valeur
