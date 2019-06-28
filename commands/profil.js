@@ -25,7 +25,7 @@ exports.run = async(client, message, args, level, now, mentionned) =>
     //const background = cible.avatarURL.toString().replace("2048", "1024")     // Chargement de l'avatar de la cible pour le background ||TEST||
 
     // Chargement d'image pour Jimp
-    var images = ["background","mask1","layer1","exp","mask2","mask3",avatar,"mask4","logo","box",servicon,"mask5","badge2_10"]
+    var images = ["background","mask1","layer1","exp","mask2","mask3",avatar,"mask4","logo","box",servicon,"mask5"]
     var jimps = []
 
     for (var i = 0; i < images.length; i++) // Chargement de la lise
@@ -58,8 +58,8 @@ exports.run = async(client, message, args, level, now, mentionned) =>
         const exp_need = Math.floor(((exp.lvl+1)*(exp.lvl+1))*100) - Math.floor(((exp.lvl)*(exp.lvl))*100)
         const exp_size = calcPercent(exp_now,exp_need)
 
-        //var p_exp = "XP: " + exp_size + "%"               // Mise en page texte xp - pourcentage
-        var p_exp = "XP: " + exp_now + "/" + exp_need       // Mise en page texte xp - note
+        var p_exp = "XP: " + exp_size + "%"               // Mise en page texte xp - pourcentage
+        //var p_exp = "XP: " + exp_now + "/" + exp_need     // Mise en page texte xp - note
             const exp_align = " ".repeat(30 - p_exp.length) // Centrage texte xp
             p_exp = exp_align.concat(p_exp)
         
